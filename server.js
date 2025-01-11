@@ -14,7 +14,7 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 // Configure middleware - order is important
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'https://recipe-ai-bay.vercel.app'],
     methods: ['GET', 'POST'],
     credentials: true
 }));
