@@ -363,10 +363,8 @@ document.getElementById('recipe-form').addEventListener('submit', async function
         const response = await fetch('/api/generate-recipe', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'application/json'
             },
-            credentials: 'same-origin',
             body: JSON.stringify({ dish })
         });
 
@@ -542,10 +540,8 @@ document.getElementById('updateRecipe').addEventListener('click', async function
         const response = await fetch('/api/update-recipe', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'application/json'
             },
-            credentials: 'same-origin',
             body: JSON.stringify({
                 recipe: recipeText,
                 equipment: equipmentList
