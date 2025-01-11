@@ -363,8 +363,10 @@ document.getElementById('recipe-form').addEventListener('submit', async function
         const response = await fetch('https://recipe-ga2kg36g8-tejas-solankis-projects.vercel.app/api/generate-recipe', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
+            mode: 'cors',
             body: JSON.stringify({ dish })
         });
 
@@ -540,8 +542,10 @@ document.getElementById('updateRecipe').addEventListener('click', async function
         const response = await fetch('https://recipe-ga2kg36g8-tejas-solankis-projects.vercel.app/api/update-recipe', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
+            mode: 'cors',
             body: JSON.stringify({
                 recipe: recipeText,
                 equipment: equipmentList
