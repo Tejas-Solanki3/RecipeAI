@@ -358,7 +358,7 @@ document.getElementById('recipe-form').addEventListener('submit', async function
 
     try {
         console.log('Sending request for dish:', dish);
-        const apiUrl = window.location.origin + '/api/generate-recipe';
+        const apiUrl = '/api/generate-recipe';
         console.log('Making request to:', apiUrl);
         
         const response = await fetch(apiUrl, {
@@ -370,9 +370,11 @@ document.getElementById('recipe-form').addEventListener('submit', async function
         });
 
         if (!response.ok) {
+            const errorData = await response.text();
+            console.error('API Error:', errorData);
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
         
         if (data.error) {
