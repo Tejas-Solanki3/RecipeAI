@@ -4,18 +4,16 @@
     { "src": "pages/api/*.js", "use": "@vercel/node" },
     { "src": "public/**/*", "use": "@vercel/static" }
   ],
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type,Authorization" }
-      ]
-    }
-  ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/pages/api/$1" },
+    {
+      "src": "/api/(.*)",
+      "dest": "/pages/api/$1",
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+        "Access-Control-Allow-Headers": "*"
+      }
+    },
     { "src": "/(.*)", "dest": "/public/$1" }
   ],
   "env": {
