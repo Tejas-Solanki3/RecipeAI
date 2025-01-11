@@ -313,9 +313,7 @@ document.addEventListener('change', function(event) {
 });
 
 // API configuration
-const BASE_URL = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://recipe-ga2kg36g8-tejas-solankis-projects.vercel.app'; // Your backend Vercel URL
+const BASE_URL = window.location.origin;
 
 // Recipe form submission
 document.getElementById('recipe-form').addEventListener('submit', async function(event) {
@@ -360,12 +358,14 @@ document.getElementById('recipe-form').addEventListener('submit', async function
 
     try {
         console.log('Sending request for dish:', dish);
-        const response = await fetch(`${BASE_URL}/api/generate-recipe`, {
+        const apiUrl = window.location.origin + '/api/generate-recipe';
+        console.log('Making request to:', apiUrl);
+        
+        const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            mode: 'cors',
             body: JSON.stringify({ dish })
         });
 
@@ -538,12 +538,14 @@ document.getElementById('updateRecipe').addEventListener('click', async function
         updateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
         updateBtn.disabled = true;
 
-        const response = await fetch(`${BASE_URL}/api/update-recipe`, {
+        const apiUrl = window.location.origin + '/api/update-recipe';
+        console.log('Making request to:', apiUrl);
+        
+        const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            mode: 'cors',
             body: JSON.stringify({
                 recipe: recipeText,
                 equipment: equipmentList
