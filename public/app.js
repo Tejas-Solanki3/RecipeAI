@@ -360,7 +360,7 @@ document.getElementById('recipe-form').addEventListener('submit', async function
 
     try {
         console.log('Sending request for dish:', dish);
-        const response = await fetch(`${BASE_URL}/api/generate-recipe`, {
+        const response = await fetch('/api/generate-recipe', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -537,7 +537,7 @@ document.getElementById('updateRecipe').addEventListener('click', async function
         updateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
         updateBtn.disabled = true;
 
-        const response = await fetch(`${BASE_URL}/api/update-recipe`, {
+        const response = await fetch('/api/update-recipe', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
