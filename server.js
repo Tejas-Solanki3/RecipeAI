@@ -13,16 +13,7 @@ const PORT = process.env.PORT || 3000;
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 // Configure middleware - order is important
-app.use(cors({
-    origin: [
-        'http://localhost:3000',
-        'https://recipe-ai-bay.vercel.app',
-        'https://recipe-ai-git-main-tejas-solankis-projects.vercel.app',
-        'https://recipe-ai-tejas-solankis-projects.vercel.app'
-    ],
-    methods: ['GET', 'POST'],
-    credentials: true
-}));
+app.use(cors());
 app.use(express.json());  // for parsing application/json
 app.use(express.urlencoded({ extended: true }));  // for parsing application/x-www-form-urlencoded
 app.use(express.static('public'));
