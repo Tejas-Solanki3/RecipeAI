@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Recipe AI - Your Personal Chef</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar glass-effect">
+        <div class="nav-brand">
+            <i class="fas fa-utensils brand-icon"></i>
+            <span class="brand-text">Recipe AI</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="premium-btn glow-effect">
+                <i class="fas fa-crown"></i> Premium
+            </a>
+            <button class="login-btn outline-btn">Login</button>
+            <button class="register-btn gradient-btn pulse">Get Started</button>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-bg-animation"></div>
+        <div class="container">
+            <header class="fade-in">
+                <h1>Recipe<span class="accent-text">AI</span></h1>
+                <p class="subtitle slide-up">Your AI-Powered Kitchen Companion</p>
+            </header>
+
+            <div class="search-container bounce-in">
+                <form id="recipe-form">
+                    <div class="input-group glass-effect">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="dish" name="dish" placeholder="Enter any dish name to get started..." required>
+                        <button type="submit" class="gradient-btn">
+                            <i class="fas fa-wand-magic-sparkles"></i> Create Magic
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <div id="loading" class="loading hidden">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <div class="loading-text">
+                    <p class="main-text">Creating culinary magic just for you...</p>
+                    <div class="typing-dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <p class="sub-text">Our AI chef is perfecting your recipe</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="recipe-output" class="recipe-container hidden">
+            <div class="equipment-section premium-feature">
+                <h3><i class="fas fa-blender"></i> Kitchen Equipment</h3>
+                <p class="equipment-intro">Select the equipment you have available:</p>
+                <div class="equipment-grid">
+                    <label class="equipment-item">
+                        <input type="checkbox" name="equipment" value="stove" checked> 
+                        <span class="equipment-icon"><i class="fas fa-fire"></i></span>
+                        <span class="equipment-name">Stove/Gas</span>
+                    </label>
+                    <label class="equipment-item">
+                        <input type="checkbox" name="equipment" value="oven"> 
+                        <span class="equipment-icon"><i class="fas fa-temperature-high"></i></span>
+                        <span class="equipment-name">Oven</span>
+                    </label>
+                    <label class="equipment-item">
+                        <input type="checkbox" name="equipment" value="microwave"> 
+                        <span class="equipment-icon"><i class="fas fa-broadcast-tower"></i></span>
+                        <span class="equipment-name">Microwave</span>
+                    </label>
+                    <label class="equipment-item">
+                        <input type="checkbox" name="equipment" value="mixer"> 
+                        <span class="equipment-icon"><i class="fas fa-blender"></i></span>
+                        <span class="equipment-name">Mixer/Grinder</span>
+                    </label>
+                    <label class="equipment-item">
+                        <input type="checkbox" name="equipment" value="pressure_cooker"> 
+                        <span class="equipment-icon"><i class="fas fa-drum-steelpan"></i></span>
+                        <span class="equipment-name">Pressure Cooker</span>
+                    </label>
+                    <label class="equipment-item">
+                        <input type="checkbox" name="equipment" value="air_fryer"> 
+                        <span class="equipment-icon"><i class="fas fa-wind"></i></span>
+                        <span class="equipment-name">Air Fryer</span>
+                    </label>
+                </div>
+                <button id="updateRecipe" class="btn-gradient">
+                    <i class="fas fa-sync-alt"></i> Update Recipe
+                </button>
+            </div>
+            <div class="panel ingredients-panel animate-fade-in">
+                <h2><i class="fas fa-shopping-basket"></i> Ingredients</h2>
+                <div id="ingredients-list" class="animate-slide-up"></div>
+            </div>
+            
+            <div class="panel instructions-panel animate-fade-in">
+                <h2><i class="fas fa-list-ol"></i> Instructions</h2>
+                <div id="instructions-list" class="animate-slide-up">
+                    <div class="instructions-tabs">
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" onclick="switchTab(this, 'english')">English</button>
+                            <button class="tab-btn" onclick="switchTab(this, 'hinglish')">Hinglish</button>
+                        </div>
+                        <div class="tab-content">
+                            <div id="english" class="tab-pane active"></div>
+                            <div id="hinglish" class="tab-pane"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="featured-recipes">
+            <div class="container">
+                <h2 class="text-center mb-5">Featured AI Recipes</h2>
+                <div class="recipe-cards">
+                    <div class="recipe-card">
+                        <h3>Veg Pizza</h3>
+                        <p>A delicious homemade vegetarian pizza with fresh toppings and melted cheese on a crispy crust.</p>
+                        <div class="recipe-image">
+                            <img src="images/veg_pizza.png" alt="Veg Pizza">
+                        </div>
+                        <button onclick="document.getElementById('dish').value='veg pizza'; document.getElementById('recipe-form').submit();" class="try-recipe-btn">
+                            Get Recipe <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="recipe-card">
+                        <h3>Butter Chicken</h3>
+                        <p>Creamy, rich butter chicken with tender pieces of tandoori chicken in a makhani gravy.</p>
+                        <div class="recipe-image">
+                            <img src="images/butter_chicken.png" alt="Butter Chicken">
+                        </div>
+                        <button onclick="document.getElementById('dish').value='butter chicken'; document.getElementById('recipe-form').submit();" class="try-recipe-btn">
+                            Get Recipe <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="recipe-card">
+                        <h3>Paneer Masala</h3>
+                        <p>Soft paneer cubes in a rich, spicy tomato-based curry with aromatic Indian spices.</p>
+                        <div class="recipe-image">
+                            <img src="images/paneer_masala.png" alt="Paneer Masala">
+                        </div>
+                        <button onclick="document.getElementById('dish').value='paneer masala'; document.getElementById('recipe-form').submit();" class="try-recipe-btn">
+                            Get Recipe <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <h2>Experience the Magic</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Think of a Dish</h3>
+                    <p>Any dish, any cuisine - let your imagination run wild!</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+                    <h3>Let AI Work its Magic</h3>
+                    <p>Our AI chef creates a personalized recipe just for you</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-utensils"></i></div>
+                    <h3>Start Cooking</h3>
+                    <p>Follow our easy steps in English or Hinglish - your choice!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section animate-on-scroll">
+            <h2>Get in Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email Us</h3>
+                        <p>support@recipeai.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <h3>Call Us</h3>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Visit Us</h3>
+                        <p>123 Recipe Street<br>Foodie City, FC 12345</p>
+                    </div>
+                </div>
+                <form id="contact-form" class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" required></textarea>
+                    <button type="submit" class="btn-gradient">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Recipe AI</h3>
+                <p>Your personal AI chef, available 24/7</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#featured-recipes">Featured Recipes</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Recipe AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Premium Modal -->
+    <div id="premiumModal" class="modal">
+        <div class="modal-content premium-modal">
+            <span class="close-btn" onclick="closeModal(document.getElementById('premiumModal'))">&times;</span>
+            <div class="premium-header">
+                <h2><i class="fas fa-crown"></i> Premium Plans</h2>
+                <p>Choose the perfect plan for your cooking journey</p>
+            </div>
+            
+            <div class="pricing-container">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Monthly</h3>
+                        <div class="price">
+                            <span class="currency">₹</span>
+                            <span class="amount">49</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Unlimited Recipe Generation</li>
+                            <li><i class="fas fa-check"></i> Ad-Free Experience</li>
+                            <li><i class="fas fa-check"></i> Save Favorite Recipes</li>
+                            <li><i class="fas fa-check"></i> Basic Support</li>
+                        </ul>
+                    </div>
+                    <button class="premium-btn">Get Started</button>
+                </div>
+
+                <div class="pricing-card popular">
+                    <div class="popular-tag">Most Popular</div>
+                    <div class="pricing-header">
+                        <h3>Half Yearly</h3>
+                        <div class="price">
+                            <span class="currency">₹</span>
+                            <span class="amount">249</span>
+                            <span class="period">/6 months</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> All Monthly Features</li>
+                            <li><i class="fas fa-check"></i> Kitchen Equipment Guide</li>
+                            <li><i class="fas fa-check"></i> Cooking Tips & Tricks</li>
+                            <li><i class="fas fa-check"></i> Priority Support</li>
+                        </ul>
+                    </div>
+                    <button class="premium-btn">Best Value</button>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Yearly</h3>
+                        <div class="price">
+                            <span class="currency">₹</span>
+                            <span class="amount">449</span>
+                            <span class="period">/year</span>
+                        </div>
+                    </div>
+                    <div class="pricing-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> All Half Yearly Features</li>
+                            <li><i class="fas fa-check"></i> YouTube Integration</li>
+                            <li><i class="fas fa-check"></i> Equipment Recommendations</li>
+                            <li><i class="fas fa-check"></i> 24/7 Premium Support</li>
+                        </ul>
+                    </div>
+                    <button class="premium-btn">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
