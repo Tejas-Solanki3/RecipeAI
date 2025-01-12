@@ -364,12 +364,14 @@ document.getElementById('recipe-form').addEventListener('submit', async function
             headers: { 
                 'Content-Type': 'application/json'
             },
-            mode: 'no-cors',
+            credentials: 'include',
             body: JSON.stringify({ dish })
         });
 
-        if (!response.ok) {
-            throw new Error('Response was not ok, received a status: ' + response.status);
+        if (!response.type === 'opaque') {
+            if (!response.ok) {
+                throw new Error('Response was not ok, received a status: ' + response.status);
+            }
         }
 
         const data = await response.json();
