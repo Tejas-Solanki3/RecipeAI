@@ -5,7 +5,6 @@ export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', '*');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
 
     // Handle preflight request
     if (req.method === 'OPTIONS') {
@@ -20,12 +19,16 @@ export default async function handler(req, res) {
     }
 
     try {
+        console.log('Received request:', req.body);
+        
         const { dish } = req.body;
         if (!dish) {
             res.status(400).json({ error: 'Dish name is required' });
             return;
         }
 
+        console.log('Generating recipe for:', dish);
+        
         const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
         const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
@@ -40,6 +43,7 @@ export default async function handler(req, res) {
         const response = await result.response;
         const recipe = response.text();
 
+        console.log('Generated recipe successfully');
         res.status(200).json({ recipe });
     } catch (error) {
         console.error('Recipe generation error:', error);

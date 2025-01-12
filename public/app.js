@@ -364,18 +364,24 @@ document.getElementById('recipe-form').addEventListener('submit', async function
             headers: { 
                 'Content-Type': 'application/json'
             },
-            credentials: 'include',
             body: JSON.stringify({ dish })
         });
 
-        if (!response.type === 'opaque') {
-            if (!response.ok) {
-                throw new Error('Response was not ok, received a status: ' + response.status);
-            }
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('API Error:', errorText);
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
+        console.log('Response data:', data);
         
+        if (!data.recipe) {
+            throw new Error('No recipe received from server');
+        }
+
         // Parse the recipe
         const { ingredients, instructions, hinglish } = parseRecipe(data.recipe);
         
