@@ -364,8 +364,10 @@ document.getElementById('recipe-form').addEventListener('submit', async function
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify({ dish })
         });
 
@@ -546,8 +548,10 @@ document.getElementById('updateRecipe').addEventListener('click', async function
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify({
                 recipe: recipeText,
                 equipment: equipmentList

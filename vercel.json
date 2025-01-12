@@ -8,10 +8,13 @@
     {
       "src": "/api/(.*)",
       "dest": "/pages/api/$1",
+      "methods": ["OPTIONS", "POST", "GET"],
       "headers": {
+        "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-        "Access-Control-Allow-Headers": "*"
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Max-Age": "86400"
       }
     },
     { "src": "/(.*)", "dest": "/public/$1" }
