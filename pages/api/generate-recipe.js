@@ -1,5 +1,8 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
+// Set a timeout for the API request
+const TIMEOUT_DURATION = 50000; // 50 seconds
+
 export default async function handler(req, res) {
     // Set CORS headers
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -30,16 +33,31 @@ export default async function handler(req, res) {
         console.log('Generating recipe for:', dish);
         
         const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
-        const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+        const model = genAI.getGenerativeModel({ 
+            model: 'gemini-pro',
+            generationConfig: {
+                maxOutputTokens: 1000,
+                temperature: 0.7
+            }
+        });
 
-        const prompt = `Generate a detailed recipe for ${dish}. Include the following sections:
+        // Create a timeout promise
+        const timeoutPromise = new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Request timeout')), TIMEOUT_DURATION);
+        });
+
+        // Race between the API call and timeout
+        const prompt = `Generate a concise recipe for ${dish}. Include:
             1. Ingredients (with measurements)
             2. Step-by-step instructions
-            3. Hinglish instructions (Hindi-English mix language instructions)
-            
-            Format each section clearly with headers. Number the steps in instructions and Hinglish sections.`;
+            3. Hinglish instructions
+            Keep it brief but clear.`;
 
-        const result = await model.generateContent(prompt);
+        const result = await Promise.race([
+            model.generateContent(prompt),
+            timeoutPromise
+        ]);
+
         const response = await result.response;
         const recipe = response.text();
 
@@ -47,6 +65,10 @@ export default async function handler(req, res) {
         res.status(200).json({ recipe });
     } catch (error) {
         console.error('Recipe generation error:', error);
-        res.status(500).json({ error: 'Failed to generate recipe' });
+        const errorMessage = error.message === 'Request timeout' 
+            ? 'Recipe generation took too long. Please try again.'
+            : 'Failed to generate recipe';
+        res.status(error.message === 'Request timeout' ? 504 : 500)
+            .json({ error: errorMessage });
     }
 }
