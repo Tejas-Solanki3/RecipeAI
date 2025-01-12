@@ -361,7 +361,7 @@ document.getElementById('recipe-form').addEventListener('submit', async function
         
         // Get the current origin or use the Vercel URL in production
         const baseUrl = window.location.hostname === 'localhost' 
-            ? '' 
+            ? 'http://localhost:3000' 
             : 'https://recipe-ai-bay.vercel.app';
             
         console.log('Using base URL:', baseUrl);
@@ -369,7 +369,8 @@ document.getElementById('recipe-form').addEventListener('submit', async function
         const response = await fetch(`${baseUrl}/api/generate-recipe`, {
             method: 'POST',
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify({ dish })
         });
