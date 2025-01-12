@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     // Set CORS headers
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
 
     // Handle preflight request
     if (req.method === 'OPTIONS') {
@@ -12,14 +12,17 @@ export default async function handler(req, res) {
         return;
     }
 
+    // Only allow POST
     if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Method not allowed' });
+        res.status(405).json({ error: 'Method not allowed' });
+        return;
     }
 
     try {
         const { dish } = req.body;
         if (!dish) {
-            return res.status(400).json({ message: 'Dish name is required' });
+            res.status(400).json({ error: 'Dish name is required' });
+            return;
         }
 
         const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
@@ -39,6 +42,6 @@ export default async function handler(req, res) {
         res.status(200).json({ recipe });
     } catch (error) {
         console.error('Recipe generation error:', error);
-        res.status(500).json({ message: 'Error generating recipe', error: error.message });
+        res.status(500).json({ error: 'Failed to generate recipe' });
     }
 }

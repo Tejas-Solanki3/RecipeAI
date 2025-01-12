@@ -358,18 +358,17 @@ document.getElementById('recipe-form').addEventListener('submit', async function
 
     try {
         console.log('Sending request for dish:', dish);
+        
         const response = await fetch('/api/generate-recipe', {
             method: 'POST',
-            headers: {
+            headers: { 
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ dish })
         });
 
         if (!response.ok) {
-            const errorText = await response.text();
-            console.error('API Error:', errorText);
-            throw new Error(errorText || `HTTP error! status: ${response.status}`);
+            throw new Error('Response was not ok, received a status: ' + response.status);
         }
 
         const data = await response.json();
