@@ -47,11 +47,24 @@ export default async function handler(req, res) {
         });
 
         // Race between the API call and timeout
-        const prompt = `Generate a concise recipe for ${dish}. Include:
-            1. Ingredients (with measurements)
-            2. Step-by-step instructions
-            3. Hinglish instructions
-            Keep it brief but clear.`;
+        const prompt = `Generate a recipe for ${dish}. Format it exactly as follows:
+
+Ingredients:
+- ingredient 1 with measurement
+- ingredient 2 with measurement
+(list all ingredients with measurements)
+
+Instructions:
+1. First step
+2. Second step
+(number all steps)
+
+Hinglish Instructions:
+1. First step in Hinglish
+2. Second step in Hinglish
+(number all steps)
+
+Keep each section clearly labeled and formatted as shown above.`;
 
         const result = await Promise.race([
             model.generateContent(prompt),

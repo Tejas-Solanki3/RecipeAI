@@ -53,32 +53,44 @@ function parseRecipe(recipeText) {
 
     for (let line of lines) {
         // Detect sections
-        if (line.toLowerCase().includes('ingredients')) {
+        const lowerLine = line.toLowerCase();
+        if (lowerLine.includes('ingredients') || lowerLine.includes('आवश्यक सामग्री')) {
             currentSection = 'ingredients';
             continue;
-        } else if (line.toLowerCase().includes('instructions') && !line.toLowerCase().includes('hinglish')) {
+        } else if ((lowerLine.includes('instructions') || lowerLine.includes('steps') || lowerLine.includes('method')) && !lowerLine.includes('hinglish')) {
             currentSection = 'instructions';
             continue;
-        } else if (line.toLowerCase().includes('hinglish')) {
+        } else if (lowerLine.includes('hinglish')) {
             currentSection = 'hinglish';
             continue;
         }
 
         // Skip empty lines and section headers
-        if (!line || line.toLowerCase().includes('important notes')) continue;
+        if (!line || lowerLine.includes('important notes')) continue;
 
         // Process line based on current section
         if (currentSection === 'ingredients') {
-            if (line.startsWith('-') || line.startsWith('•')) {
-                sections.ingredients.push(line.replace(/^[-•]/, '').trim());
+            // Match any line that starts with a number, bullet point, dash, or just an ingredient
+            if (line.match(/^[\d\-•\*]|^\w+:/)) {
+                sections.ingredients.push(line.replace(/^[-•\*\d\.]/, '').trim());
+            } else if (line.includes(':') || line.includes('-') || /^\w+\s+[-–]\s+/.test(line)) {
+                // Handle "Ingredient - amount" or "Ingredient: amount" format
+                sections.ingredients.push(line.trim());
+            } else if (currentSection === 'ingredients' && line.length > 0) {
+                // If we're in ingredients section and line has content, include it
+                sections.ingredients.push(line.trim());
             }
         } else if (currentSection === 'instructions') {
-            if (/^\d+\./.test(line)) {
-                sections.instructions.push(line.replace(/^\d+\./, '').trim());
+            if (/^\d+[\.\)]/.test(line)) {
+                sections.instructions.push(line.replace(/^\d+[\.\)]/, '').trim());
+            } else if (line.length > 10) { // Only add non-numbered lines if they're substantial
+                sections.instructions.push(line.trim());
             }
         } else if (currentSection === 'hinglish') {
-            if (/^\d+\./.test(line)) {
-                sections.hinglish.push(line.replace(/^\d+\./, '').trim());
+            if (/^\d+[\.\)]/.test(line)) {
+                sections.hinglish.push(line.replace(/^\d+[\.\)]/, '').trim());
+            } else if (line.length > 10) {
+                sections.hinglish.push(line.trim());
             }
         }
     }
