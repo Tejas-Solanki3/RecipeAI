@@ -487,7 +487,6 @@ button:hover, .btn:hover {
 .step-content i {
     color: #ff6b6b;
     font-size: 1.2rem;
-    margin-top: 0.2rem;
     flex-shrink: 0;
 }
 
@@ -2623,6 +2622,169 @@ button:hover, .btn:hover {
     }
 
     .instruction-step {
+        padding: 0.6rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .equipment-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .equipment-item {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Recipe Output Styles */
+.recipe-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--background-light);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.recipe-section h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.recipe-section h3 i {
+    color: var(--accent-color);
+}
+
+.ingredients-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ingredients-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ingredients-list li:last-child {
+    border-bottom: none;
+}
+
+.ingredients-list li::before {
+    content: '•';
+    color: var(--accent-color);
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .recipe-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .recipe-section {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .recipe-section h3 {
+        font-size: 1.3rem;
+    }
+
+    .ingredients-list li {
+        font-size: 0.95rem;
+        padding: 0.4rem 0;
+    }
+
+    .instruction-step {
         padding: 0.8rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .instruction-content {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .recipe-tabs {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .recipe-tabs button {
+        flex: 1 1 auto;
+        min-width: 120px;
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+
+    .equipment-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.8rem;
+    }
+
+    .equipment-item {
+        padding: 0.8rem;
+    }
+
+    .audio-controls {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .audio-controls button {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .recipe-container {
+        margin: 0.5rem;
+        padding: 0.8rem;
+        border-radius: 10px;
+    }
+
+    .recipe-section {
+        padding: 0.8rem;
+    }
+
+    .recipe-section h3 {
+        font-size: 1.2rem;
+    }
+
+    .ingredients-list li {
+        font-size: 0.9rem;
+        padding: 0.3rem 0;
+    }
+
+    .instruction-step {
+        padding: 0.6rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .equipment-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .equipment-item {
+        padding: 0.6rem;
+        font-size: 0.9rem;
     }
 }
