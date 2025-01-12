@@ -364,6 +364,7 @@ document.getElementById('recipe-form').addEventListener('submit', async function
             headers: { 
                 'Content-Type': 'application/json'
             },
+            mode: 'no-cors',
             body: JSON.stringify({ dish })
         });
 
