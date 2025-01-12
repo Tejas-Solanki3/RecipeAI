@@ -8,18 +8,14 @@
     {
       "src": "/api/(.*)",
       "dest": "/pages/api/$1",
-      "methods": ["OPTIONS", "POST", "GET"],
+      "methods": ["GET", "POST", "OPTIONS"],
       "headers": {
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-        "Access-Control-Allow-Headers": "*",
-        "Access-Control-Max-Age": "86400"
+        "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+        "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
       }
     },
     { "src": "/(.*)", "dest": "/public/$1" }
-  ],
-  "env": {
-    "GOOGLE_API_KEY": "@google_api_key"
-  }
+  ]
 }

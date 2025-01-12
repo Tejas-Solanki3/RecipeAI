@@ -358,11 +358,16 @@ document.getElementById('recipe-form').addEventListener('submit', async function
 
     try {
         console.log('Sending request for dish:', dish);
-        const response = await fetch('/api/generate-recipe', {
+        const apiUrl = window.location.origin + '/api/generate-recipe';
+        console.log('Making request to:', apiUrl);
+        
+        const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
+            mode: 'cors',
             body: JSON.stringify({ dish })
         }).catch(error => {
             console.error('Fetch error:', error);
@@ -559,7 +564,7 @@ document.getElementById('updateRecipe').addEventListener('click', async function
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            credentials: 'include',
+            mode: 'cors',
             body: JSON.stringify({
                 recipe: recipeText,
                 equipment: equipmentList
