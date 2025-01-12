@@ -358,37 +358,22 @@ document.getElementById('recipe-form').addEventListener('submit', async function
 
     try {
         console.log('Sending request for dish:', dish);
-        const apiUrl = window.location.origin + '/api/generate-recipe';
-        console.log('Making request to:', apiUrl);
-        
-        const response = await fetch(apiUrl, {
+        const response = await fetch('/api/generate-recipe', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'application/json'
             },
-            mode: 'cors',
             body: JSON.stringify({ dish })
-        }).catch(error => {
-            console.error('Fetch error:', error);
-            throw new Error('Network error occurred. Please check your connection.');
         });
 
         if (!response.ok) {
-            const errorData = await response.text();
-            console.error('API Error:', errorData);
-            throw new Error(errorData || `HTTP error! status: ${response.status}`);
+            const errorText = await response.text();
+            console.error('API Error:', errorText);
+            throw new Error(errorText || `HTTP error! status: ${response.status}`);
         }
 
-        const data = await response.json().catch(error => {
-            console.error('JSON parse error:', error);
-            throw new Error('Failed to parse response from server');
-        });
+        const data = await response.json();
         
-        if (data.error) {
-            throw new Error(data.error);
-        }
-
         // Parse the recipe
         const { ingredients, instructions, hinglish } = parseRecipe(data.recipe);
         
