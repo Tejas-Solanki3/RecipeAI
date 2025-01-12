@@ -2518,3 +2518,111 @@ button:hover, .btn:hover {
     animation: slideIn 0.3s ease-out;
     z-index: 1000;
 }
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    :root {
+        --container-width: 95%;
+    }
+
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        width: 95%;
+        padding: 0 1rem;
+    }
+
+    .search-container {
+        padding: 1rem;
+    }
+
+    .generate-box {
+        padding: 1rem;
+    }
+
+    .recipe-output {
+        padding: 1rem;
+    }
+
+    .instruction-step {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 1rem;
+    }
+
+    .instruction-content {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-links button, .premium-btn {
+        width: 100%;
+        padding: 0.8rem;
+    }
+
+    .how-it-works h2 {
+        font-size: 2rem;
+    }
+
+    .step {
+        margin-bottom: 1.5rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .recipe-tabs button {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    #recipe-form input[type="text"] {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+
+    #recipe-form button {
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 13px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 0 0.5rem;
+    }
+
+    .how-it-works h2 {
+        font-size: 1.8rem;
+    }
+
+    .recipe-tabs {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .recipe-tabs button {
+        width: 100%;
+    }
+
+    .generate-box {
+        border-radius: 8px;
+    }
+
+    .instruction-step {
+        padding: 0.8rem;
+    }
+}
